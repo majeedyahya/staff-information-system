@@ -1,5 +1,4 @@
 from django.urls import path
-from django.views.generic import RedirectView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .views import (
@@ -7,12 +6,13 @@ from .views import (
     RegistrationDetailAPIView,
     RegistrationListAPIView,
     UserProfileAPIView,
+    api_root,
     landing_page,
 )
 
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/swagger/', permanent=False)),
+    path('', api_root, name='api-root'),
     path('auth/token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
     path('register/', RegistrationCreateAPIView.as_view(), name='register-api'),
     path('registrations/', RegistrationListAPIView.as_view(), name='registration-list'),
