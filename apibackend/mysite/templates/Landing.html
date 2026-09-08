@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Information System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>Staff Information System by majeed</h1>
+      <nav>
+        <a href="/swagger/">Swagger API Docs</a>
+        <a href="/admin/">Admin Login</a>
+      </nav>
+    </header>
+
+    <!-- Banner -->
+    <section class="banner">
+      <h2>Welcome to Staff Management System</h2>
+      <p>Manage your employees efficiently & securely</p>
+      <a href="/swagger/" class="btn">API Documentation</a>
+      <a href="/admin/" class="btn">Admin Login</a>
+      <a href="/redoc/" class="btn">ReDoc</a>
+      <a href="/api/" class="btn">API Endpoints</a>
+    </section>
+
+    <!-- Info Boxes -->
+    <section class="info-boxes">
+      <div class="box">
+        <h3>Staff Records</h3>
+        <p>
+          Store and manage staff information like name, age, contact, and
+          payroll details.
+        </p>
+      </div>
+      <div class="box">
+        <h3>Secure Authentication</h3>
+        <p>JWT Token based authentication for secure access.</p>
+      </div>
+      <div class="box">
+        <h3>API & Documentation</h3>
+        <p>Explore our REST API with interactive Swagger UI.</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 Staff Management System. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
