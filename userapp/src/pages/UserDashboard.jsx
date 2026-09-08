@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function UserDashboard() {
-  const userName = localStorage.getItem("userName") || "John Doe";
+  const userName = localStorage.getItem("userName") || "Majeed Said";
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const dateTimer = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 60000);
+
+    return () => clearInterval(dateTimer);
+  }, []);
+
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 
   return (
     <div>
@@ -17,7 +32,7 @@ function UserDashboard() {
 
         <div className="welcome-date">
           <i className="bi bi-calendar3 me-2"></i>
-          September 2, 2026
+          {formattedDate}
         </div>
       </div>
 

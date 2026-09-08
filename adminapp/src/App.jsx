@@ -61,7 +61,7 @@ function App() {
       </Route>
 
       {/* DEFAULT ROUTE */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
 
       {/* UNKNOWN ROUTES */}
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

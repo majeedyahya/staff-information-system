@@ -1,7 +1,8 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import logo from "../assets/Logo.jpg";
 
-function UserSidebar() {
+function UserSidebar({ open }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -37,14 +38,19 @@ function UserSidebar() {
       icon: "bi-bell",
       path: "/user/notifications",
     },
+    {
+      name: "Settings",
+      icon: "bi-gear",
+      path: "/user/settings",
+    },
   ];
 
   return (
-    <aside className="user-sidebar">
+    <aside className={`user-sidebar ${open ? "" : "sidebar-hidden"}`}>
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="logo-icon">
-          <i className="bi bi-building"></i>
+          <img src={logo} alt="StaffSystem" />
         </div>
 
         <div>

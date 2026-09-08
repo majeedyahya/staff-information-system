@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/smz.jpg";
+import panel from "../assets/developer.jpg";
+import { Link } from "react-router-dom";
+
+const API_URL = "http://127.0.0.1:8000/api";
 
 function UserLogin() {
   const navigate = useNavigate();
@@ -9,7 +14,7 @@ function UserLogin() {
 
   const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     setError("");
@@ -19,18 +24,24 @@ function UserLogin() {
       return;
     }
 
-    /*
-      Temporary frontend authentication.
-
-      Later this can be replaced with your
-      backend API authentication.
-    */
-
-    localStorage.setItem("userLoggedIn", "true");
-
-    localStorage.setItem("userName", "John Doe");
-
-    navigate("/user/dashboard");
+    try {
+      const response = await fetch(`${API_URL}/auth/token/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError("Invalid username or password, or your account is still pending approval.");
+        return;
+      }
+      localStorage.setItem("userLoggedIn", "true");
+      localStorage.setItem("userAccessToken", data.access);
+      localStorage.setItem("userName", email);
+      navigate("/user/dashboard");
+    } catch {
+      setError("Unable to reach the server. Start Django and try again.");
+    }
   };
 
   return (
@@ -38,15 +49,12 @@ function UserLogin() {
       <div className="login-container">
         {/* Left Side */}
         <div className="login-left">
-          <div className="login-brand">
-            <div className="login-logo">
-              <i className="bi bi-building"></i>
-            </div>
-
-            <h2>Staff Portal</h2>
+          <img src={panel} alt="StaffSystem" className="panel-image" />
+          {/* <div className="login-brand">
+            <h1>Staff Portal</h1>
 
             <p>Manage your staff account, and leave.</p>
-          </div>
+          </div> */}
         </div>
 
         {/* Right Side */}
@@ -57,7 +65,8 @@ function UserLogin() {
                 <i className="bi bi-person"></i>
               </div>
 
-              <h3 className="fw-bold">Welcome Back</h3>
+              <img src={logo} alt="SMZ logo" className="login-logo" />
+              <h3 className="fw-bold">ZANZIBAR eGOVERMENT AUTHORITY(eGAZ)</h3>
 
               <p className="text-muted">Login to your staff account</p>
             </div>
@@ -72,7 +81,7 @@ function UserLogin() {
             <form onSubmit={handleLogin}>
               {/* Email */}
               <div className="mb-3">
-                <label className="form-label fw-semibold">Email Address</label>
+                <label className="form-label fw-semibold">Username</label>
 
                 <div className="input-group">
                   <span className="input-group-text">
@@ -80,9 +89,9 @@ function UserLogin() {
                   </span>
 
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    placeholder="Enter your email"
+                    placeholder="Enter your username"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -130,6 +139,11 @@ function UserLogin() {
                 <i className="bi bi-box-arrow-in-right me-2"></i>
                 Login
               </button>
+
+              <div className="register-link">
+                Don't have an account?{" "}
+                <Link to="/register">Create an account</Link>
+              </div>
             </form>
           </div>
         </div>

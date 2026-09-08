@@ -1,8 +1,9 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function UserNavbar() {
+function UserNavbar({ onMenuClick }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const userName = localStorage.getItem("userName") || "John Doe";
 
@@ -32,15 +33,30 @@ function UserNavbar() {
 
   return (
     <header className="user-navbar">
-      <div>
-        <h5 className="mb-0">{getPageTitle()}</h5>
+      <div className="d-flex align-items-center">
+        <button
+          className="menu-button"
+          onClick={onMenuClick}
+          aria-label="Toggle navigation menu"
+        >
+          <i className="bi bi-list"></i>
+        </button>
 
-        <small className="text-muted">Staff Information System</small>
+        <div>
+          <h5 className="mb-0">{getPageTitle()}</h5>
+
+          <small className="text-muted">Staff Information System</small>
+        </div>
       </div>
 
       <div className="d-flex align-items-center gap-3">
         {/* Notification */}
-        <button className="notification-button">
+        <button
+          type="button"
+          className="notification-button"
+          onClick={() => navigate("/user/notifications")}
+          aria-label="View notifications"
+        >
           <i className="bi bi-bell"></i>
 
           <span className="notification-badge">3</span>
